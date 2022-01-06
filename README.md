@@ -23,10 +23,13 @@ nodes, a free-text descriptor and/or exactly one `array`.
 * a data descriptor identified by by 2 1-byte characters 'da' which
   contains the actual array.
 
+Characters `{`, `}` and `:` must not occur in user defined node names.
+
 In ascii a jAson file may look like:
 
 ```json
 {
+	de:{analysis results obtained on 01/01/2020}
 	mydata:{
 		myvec1:{
 			array:{
@@ -82,3 +85,10 @@ to binary all integer descriptors and data are written in 64 bit.
 The current `C++` implementation requires sibling nodes to be unique with regard to the node name.
 
 Templating allows for different storage modes for the integer array descriptors.
+
+## ToDo
+
+All interfaces currently lack support for character arrays. The
+approach will be that for character arrays `di` will contain the
+number of bytes in `da`. Actual words in `da` are null terminated and
+can therefore be retrieved by the parser.
