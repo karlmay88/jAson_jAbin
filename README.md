@@ -9,18 +9,18 @@ The file layout has only two structural components, `nodes` and
 nodes, a free-text descriptor and/or exactly one `array`.
 `array`s must contain 5 components:
 
-* a type object identified by 2 1-byte characters 'ty' which contains
+* a type descriptor identified by 2 1-byte characters 'ty' which contains
   a 1-byte character providing information of the actual data type in
   the array which is either 'i' for integer or 'r' for real, or 'c'
   for character.
-* a bit object identified by 2 1-byte characters 'bi' which contains a
+* a bit descriptor identified by 2 1-byte characters 'bi' which contains a
   64 bit integer of bits per array element
-* a #dimension object identified by 2 1-byte characters 'nd' which
+* a #dimension descriptor identified by 2 1-byte characters 'nd' which
   contains a 64 bit integer of number of dimensions of the array
-* a dimension object identified by 2 1-byte characters 'di' which
+* a dimension descriptor identified by 2 1-byte characters 'di' which
   contains a vector of 64 bit integers describing the size of each
   dimension
-* a data object identified by by 2 1-byte characters 'da' which
+* a data descriptor identified by by 2 1-byte characters 'da' which
   contains the actual array.
 
 In ascii a jAson file may look like:
@@ -63,10 +63,22 @@ In ascii a jAson file may look like:
 	}
 }
 ```
-Object `di` and `da` may contain more than one integer number. In that case for text files `newline` serves as a value separator.
+Descriptors `di` and `da` may contain more than one integer number. In that case for text files `newline` serves as a value separator.
 
 Currently arrays are supposed to be in column-major order.
 
 Interfaces are available for `C++` and `R`.
 
+For both a tree stucture is built during, that is, the file is not read into a buffer first, saving memory and time.
+
+## R interface
+
+For writing requires a list as input and derives the content of all
+array descriptors from the actual list object. Currently, when writing
+to binary all integer descriptors and data are written in 64 bit.
+
+## C++ interface
+
 The current `C++` implementation requires sibling nodes to be unique with regard to the node name.
+
+Templating allows for different storage modes for the integer array descriptors.
