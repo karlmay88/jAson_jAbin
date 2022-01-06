@@ -31,7 +31,9 @@ In ascii a jAson file may look like:
 {
 	de:{analysis results obtained on 01/01/2020}
 	mydata:{
+		de:{first run}
 		myvec1:{
+			de:{column positions}
 			array:{
 				ty:{i}
 				bi:{64}
@@ -92,3 +94,5 @@ All interfaces currently lack support for character arrays. The
 approach will be that for character arrays `di` will contain the
 number of bytes in `da`. Actual words in `da` are null terminated and
 can therefore be retrieved by the parser.
+
+There is currently no facility to escape `{}:` in `de`.
